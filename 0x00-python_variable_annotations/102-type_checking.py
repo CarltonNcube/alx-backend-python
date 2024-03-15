@@ -3,24 +3,17 @@
 This script defines a function to zoom in an array by replicating its elements.
 """
 
-from typing import Tuple, Any
+from typing import List, Tuple
 
-def zoom_array(lst: Tuple[Any, ...], factor: int = 2) -> Tuple[Any, ...]:
-    """
-    Zoom in an array by replicating its elements.
 
-    Args:
-        lst (Tuple[Any, ...]): The input array.
-        factor (int): The zoom factor. Defaults to 2.
-
-    Returns:
-        Tuple[Any, ...]: The zoomed-in array.
-    """
-    zoomed_in: Tuple[Any, ...] = tuple(
+def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    """Type Checking Exercise"""
+    zoomed_in: List = [
         item for item in lst
-        for i in range(factor)
-    )
+        for i in range(int(factor))
+    ]
     return zoomed_in
+
 
 array = (12, 72, 91)
 
