@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-"""
-This module defines a function to safely retrieve the first element of a list.
-"""
-
+"""Defines a function to safely retrieve the first element of a list."""
 from typing import Any, Sequence, Union
+
 
 def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
     """The types of the elements of the input are not known"""
