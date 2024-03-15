@@ -3,6 +3,7 @@
 This module defines a function that safely retrieves the first element of a list.
 """
 
+
 from typing import Any, Sequence, Union
 
 
