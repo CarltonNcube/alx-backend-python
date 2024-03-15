@@ -5,6 +5,7 @@ This module defines a function that calculates the length of each element in a l
 
 from typing import Iterable, List, Sequence, Tuple
 
+
 def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
     """
     Calculate the length of each element in a list.
