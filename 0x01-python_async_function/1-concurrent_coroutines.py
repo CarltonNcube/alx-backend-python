@@ -1,28 +1,24 @@
 #!/usr/bin/env python3
 """Execute multiple coroutines at the same time with async"""
-from typing import List
 import asyncio
-from random import uniform
+from basic_async_syntax import wait_n
 
-
-async def wait_random(max_delay: int = 10) -> float:
+def measure_time(n: int, max_delay: int) -> float:
     """
-    Asynchronous coroutine that waits for a random delay between 0.
+    Measures and returns the average execution time for wait_n(n, max_delay).
 
     Args:
-        max_delay (int): Maximum delay in seconds (default is 10).
+        n (int): Number of times to call wait_n.
+        max_delay (int): Maximum delay in seconds for each call to wait_n.
 
     Returns:
-        float: The random delay.
+        float: Average time taken for each call to wait_n.
     """
-    delay = uniform(0, max_delay)
-    await asyncio.sleep(delay)
-    return delay
+    async def measure():
+        start_time = asyncio.get_event_loop().time()
+        await wait_n(n, max_delay)
+        end_time = asyncio.get_event_loop().time()
+        total_time = end_time - start_time
+        return total_time / n
 
-
-async def wait_n(n: int, max_delay: int) -> List[float]:
-    """Spawns wait_random n times with the specified max_delay
-        and returns the list of all the delays (float values)."""
-    tasks = [wait_random(max_delay) for _ in range(n)]
-    completed_tasks = await asyncio.gather(*tasks)
-    return sorted(completed_tasks)
+    return asyncio.run(measure())
