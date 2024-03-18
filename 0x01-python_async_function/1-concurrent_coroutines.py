@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Execute multiple coroutines at the same time with async"""
-import asyncio
+import time
 from basic_async_syntax import wait_n
 
 def measure_time(n: int, max_delay: int) -> float:
@@ -14,11 +14,8 @@ def measure_time(n: int, max_delay: int) -> float:
     Returns:
         float: Average time taken for each call to wait_n.
     """
-    async def measure():
-        start_time = asyncio.get_event_loop().time()
-        await wait_n(n, max_delay)
-        end_time = asyncio.get_event_loop().time()
-        total_time = end_time - start_time
-        return total_time / n
-
-    return asyncio.run(measure())
+    start_time = time.time()
+    wait_n(n, max_delay)
+    end_time = time.time()
+    total_time = end_time - start_time
+    return total_time / n
