@@ -2,6 +2,8 @@
 """
 Defines a coroutine that generates random numbers asynchronously.
 """
+
+
 import asyncio
 import random
 from typing import AsyncGenerator
