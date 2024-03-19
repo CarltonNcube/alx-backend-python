@@ -2,10 +2,10 @@
 """Defines a coroutine that generates random numbers asynchronously."""
 import asyncio
 import random
-from typing import Generator
+from typing import AsyncGenerator
 
 
-async def async_generator() -> Generator[float, None]:
+async def async_generator() -> AsyncGenerator[float, None]:
     """
     Asynchronously generates random numbers between 0 and 10.
 
