@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
 """A module for testing the utils module.
 """
+
 import unittest
 from typing import Dict, Tuple, Union
 from unittest.mock import patch, Mock
 from parameterized import parameterized
-
-from utils import (
-    access_nested_map,
-    get_json,
-    memoize,
-)
-
+from utils import access_nested_map, get_json, memoize
 
 class TestAccessNestedMap(unittest.TestCase):
     """Tests the `access_nested_map` function."""
@@ -44,7 +39,6 @@ class TestAccessNestedMap(unittest.TestCase):
             access_nested_map(nested_map, path)
         self.assertEqual(str(context.exception), f"Key not found: {path[-1]}")
 
-
 class TestGetJson(unittest.TestCase):
     """Tests the `get_json` function."""
     @parameterized.expand([
@@ -61,7 +55,6 @@ class TestGetJson(unittest.TestCase):
         with patch("requests.get", return_value=Mock(**attrs)) as req_get:
             self.assertEqual(get_json(test_url), test_payload)
             req_get.assert_called_once()
-
 
 class TestMemoize(unittest.TestCase):
     """Tests the `memoize` function."""
@@ -87,3 +80,4 @@ class TestMemoize(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
