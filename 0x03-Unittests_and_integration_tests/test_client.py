@@ -26,17 +26,20 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch('client.GithubOrgClient.org')
     def test_public_repos_url(self, mock_org):
         """Test for GithubOrgClient._public_repos_url property"""
-        mock_org.return_value = {'repos_url': 'https://api.github.com/orgs/test/repos'}
+        mock_org.return_value = {
+            'repos_url': 'https://api.github.com/orgs/test/repos'}
         github_client = GithubOrgClient('test')
         self.assertEqual(github_client._public_repos_url,
                          'https://api.github.com/orgs/test/repos')
 
     @patch('client.get_json')
-    @patch('client.GithubOrgClient._public_repos_url', new_callable=PropertyMock)
+    @patch('client.GithubOrgClient._public_repos_url',
+           new_callable=PropertyMock)
     def test_public_repos(self, mock_public_repos_url, mock_get_json):
         """Test for GithubOrgClient.public_repos method"""
         expected_repos = [{'name': 'repo1'}, {'name': 'repo2'}]
-        mock_public_repos_url.return_value = 'https://api.github.com/orgs/test/repos'
+        mock_public_repos_url.return_value = \
+            'https://api.github.com/orgs/test/repos'
         mock_get_json.return_value = expected_repos
         github_client = GithubOrgClient('test')
         repos = github_client.public_repos()
@@ -52,14 +55,18 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_has_license(self, repo, license_key, expected):
         """Test for GithubOrgClient.has_license method"""
         github_client = GithubOrgClient('test')
-        self.assertEqual(github_client.has_license(repo, license_key), expected)
+        self.assertEqual(github_client.has_license
+                         (repo, license_key), expected)
 
     @patch('client.get_json')
-    @patch('client.GithubOrgClient._public_repos_url', new_callable=PropertyMock)
-    def test_public_repos_with_license(self, mock_public_repos_url, mock_get_json):
+    @patch('client.GithubOrgClient._public_repos_url',
+           new_callable=PropertyMock)
+    def test_public_repos_with_license(
+            self, mock_public_repos_url, mock_get_json):
         """Test for GithubOrgClient.public_repos with license argument"""
         expected_repos = [{'name': 'repo3'}, {'name': 'repo4'}]
-        mock_public_repos_url.return_value = 'https://api.github.com/orgs/test/repos'
+        mock_public_repos_url.return_value = \
+            'https://api.github.com/orgs/test/repos'
         mock_get_json.return_value = expected_repos
         github_client = GithubOrgClient('test')
         repos = github_client.public_repos(license="apache-2.0")
@@ -114,8 +121,4 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def tearDownClass(cls):
         """Removes class fixtures after running tests"""
         cls.get_patcher.stop()
-
-
-if __name__ == "__main__":
-    unittest.main()
 
