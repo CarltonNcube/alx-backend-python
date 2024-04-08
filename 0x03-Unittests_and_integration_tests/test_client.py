@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Unit tests for the GithubOrgClient class"""
+"""Unit tests for GithubOrgClient class"""
 
 import unittest
 from unittest.mock import patch, PropertyMock
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
-from requests import HTTPError
 from fixtures import TEST_PAYLOAD
 
 
@@ -16,7 +15,7 @@ class TestGithubOrgClient(unittest.TestCase):
         ("google",),
         ("abc",),
     ])
-    @patch('client.get_json')
+    @patch('client.GithubOrgClient.get_json')
     def test_org(self, org_name, mock_get_json):
         """Test for GithubOrgClient.org method"""
         expected = {'org': org_name}
@@ -79,11 +78,11 @@ class TestGithubOrgClient(unittest.TestCase):
     },
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Performs integration tests for the `GithubOrgClient` class."""
+    """Performs integration tests for GithubOrgClient"""
 
     @classmethod
     def setUpClass(cls):
-        """Sets up class fixtures before running tests."""
+        """Sets up class fixtures before running tests"""
         route_payload = {
             'https://api.github.com/orgs/google': cls.org_payload,
             'https://api.github.com/orgs/google/repos': cls.repos_payload,
@@ -98,14 +97,14 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.start()
 
     def test_public_repos(self):
-        """Test for the `public_repos` method."""
+        """Tests the public_repos method"""
         self.assertEqual(
             GithubOrgClient("google").public_repos(),
             self.expected_repos,
         )
 
     def test_public_repos_with_license(self):
-        """Test for the `public_repos` method with a license."""
+        """Tests public_repos with a license"""
         self.assertEqual(
             GithubOrgClient("google").public_repos(license="apache-2.0"),
             self.apache2_repos,
@@ -113,7 +112,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """Removes the class fixtures after running all tests."""
+        """Removes class fixtures after running tests"""
         cls.get_patcher.stop()
 
 
